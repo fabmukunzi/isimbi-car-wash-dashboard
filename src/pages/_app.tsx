@@ -1,13 +1,23 @@
 import type { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
 import '../assets/css/globals.css';
-import AppLayout from '../layouts/dashboard';
+import DashboardLayout from '../layouts/dashboard';
+import { useRouter } from 'next/router';
+import Login from './login';
 
 const App = ({ Component, pageProps }: AppProps) => {
+  const router = useRouter();
+  const currentRoute = router.pathname.split('/')[1];
   return (
-    // <AppLayout>
-      <Component {...pageProps} />
-    // </AppLayout>
+    <>
+      {currentRoute === 'dashboard' ? (
+        <DashboardLayout>
+          <Component {...pageProps} />
+        </DashboardLayout>
+      ) : (
+        <Login {...pageProps} />
+      )}
+    </>
   );
 };
 

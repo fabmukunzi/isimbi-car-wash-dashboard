@@ -37,5 +37,7 @@ body {
 }
 .auth {
   background-image: url('../images/Rectangle 5338.png');
-  background-repeat: no-repeat;
+  background-size: cover;
+  /* overflow: hidden; */
+  /* background-repeat: no-repeat; */
 }

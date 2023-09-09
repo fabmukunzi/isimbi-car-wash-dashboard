@@ -7,13 +7,13 @@ interface ILayout {
 const DashboardLayout: FC<ILayout> = ({ children }) => {
   const { Text } = Typography;
   return (
-    <div className="font-poppins overflow-hidden min-h-full flex justify-start gap-2">
-      <div className="font-bold text-center my-auto">
+    <div className="font-poppins flex gap-2 h-screen overflow-hidden">
+      <div className="font-bold text-center my-auto h-screen w-[15%]">
         <SideBar />
       </div>
-      <Card className="backdrop-blur-lg bg-gray-100/30">
+      <div className="backdrop-blur-lg w-full p-6 mt-5">
         <div className="w-80">{children}</div>
-      </Card>
+      </div>
     </div>
   );
 };

@@ -1,7 +1,6 @@
-import {Button} from "antd";
 import LoginPage from "../components/auth/login";
 import AuthLayout from "../layouts/auth";
-const Home=()=> {
+const Login=()=> {
   return (
     <div className="App">
     <AuthLayout>
@@ -11,4 +10,4 @@ const Home=()=> {
   )
 }
 
-export default Home
+export default Login

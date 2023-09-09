@@ -6,11 +6,13 @@ interface ILayout {
 const AuthLayout: FC<ILayout> = ({ children }) => {
   const { Text } = Typography;
   return (
-    <div className="auth font-poppins overflow-hidden py-40 min-h-full flex justify-between px-20">
-      <div className='font-bold w-[24rem] text-center my-auto'>
-        <Text className='text-center text-white text-3xl'>A New And Convenient Way To Give Your Car a Treat!</Text>
+    <div className="auth font-poppins overflow-hidden h-screen flex justify-between items-center px-20">
+      <div className="font-bold w-[24rem] text-center my-auto">
+        <Text className="text-center text-white text-3xl">
+          Book Now And Get A Wash In <span className='text-primary'>30 Mins</span>
+        </Text>
       </div>
-      <Card className="backdrop-blur-lg bg-gray-100/30">
+      <Card className="backdrop-blur-lg bg-gray-100/30 h-fit">
         <div className="w-80">{children}</div>
       </Card>
     </div>
