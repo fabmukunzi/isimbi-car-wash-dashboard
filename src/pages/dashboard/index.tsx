@@ -42,7 +42,7 @@ const Home = () => {
         <div className="flex w-full gap-6 my-4">
           <Card
             className="w-full text-center bg-secondary"
-            style={{ width: 250, height: 120 }}
+            style={{ width: 250, height: 100 }}
           >
             <Text className="text-primary text-2xl font-bold">112</Text>
             <br />
@@ -50,7 +50,7 @@ const Home = () => {
           </Card>
           <Card
             className="w-full text-center bg-secondary"
-            style={{ width: 250, height: 120 }}
+            style={{ width: 250, height: 100 }}
           >
             <Text className="text-primary text-2xl font-bold">112</Text>
             <br />
@@ -58,14 +58,14 @@ const Home = () => {
           </Card>
           <Card
             className="w-full text-center bg-secondary"
-            style={{ width: 250, height: 120 }}
+            style={{ width: 250, height: 100 }}
           >
             <Text className="text-primary text-2xl font-bold">112</Text>
             <br />
             <Text className="font-semibold">Cancelled Orders</Text>
           </Card>
         </div>
-        <div className="w-[50rem] h-64 overflow-hidden">
+        <div className="w-[50rem] h-80 overflow-hidden">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15950.34686032!2d30.054956999999995!3d-1.91641695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2srw!4v1694286992183!5m2!1sen!2srw"
             className="border-none w-full h-full rounded-lg"
@@ -82,17 +82,17 @@ const Home = () => {
           <div>
             <div className="flex gap-10">
               <Badge count={11} color="green">
-                <Button className="bg-primary w-28 h-10 text-white border-none font-bold">
+                <Button className="bg-primary w-24 h-8 text-white border-none font-bold">
                   Clients
                 </Button>
               </Badge>
               <Badge count={11} color="green">
-                <Button className="bg-secondary w-28 h-10 font-bold border-none">
+                <Button className="bg-secondary w-24 h-8 font-bold border-none">
                   Drivers
                 </Button>
               </Badge>
               <Badge count={11} color="chocolate">
-                <Button className="bg-secondary w-28 h-10 font-bold border-none">
+                <Button className="bg-secondary w-24 h-8 font-bold border-none">
                   Boards
                 </Button>
               </Badge>
@@ -127,9 +127,9 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div>
+      <div className='cols-span-2 w-full bg-yellow-300'>
         <Card className="bg-secondary text-center">
-          <div className="mb-4">
+          <div className="mb-4 flex flex-col">
             <Text className="font-semibold text-lg">Average Reach Time</Text>
             <br />
             <Text className="text-primary font-bold text-2xl py-2">

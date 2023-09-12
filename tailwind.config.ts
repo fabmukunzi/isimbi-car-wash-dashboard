@@ -13,7 +13,8 @@ const config: Config = {
       },
       colors: {
         primary: '#0077B6',
-        secondary: '#ECECEC'
+        secondary: '#ECECEC',
+        // gradient: 'linear-gradient(90deg, #1CB5E0 0%, #000851 100%)'
       },
     },
   },

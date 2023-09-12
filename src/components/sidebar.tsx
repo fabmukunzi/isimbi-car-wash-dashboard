@@ -46,11 +46,7 @@ const items: MenuItem[] = [
 const SideBar: React.FC = () => {
   const { Text } = Typography;
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter(); // Initialize the router
-
-  // ... (other code)
-
-  // Function to handle menu item clicks and change the route
+  const router = useRouter(); 
   const handleMenuItemClick = (key: string) => {
     switch (key) {
       case '1':
@@ -72,7 +68,7 @@ const SideBar: React.FC = () => {
         router.push('/dashboard/supports');
         break;
       default:
-        router.push('/')
+        router.push('/dashboard')
         break;
     }
   };

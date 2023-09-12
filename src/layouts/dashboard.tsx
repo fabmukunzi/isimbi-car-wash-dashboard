@@ -8,7 +8,7 @@ const DashboardLayout: FC<ILayout> = ({ children }) => {
   const { Text } = Typography;
   return (
     <div className="font-poppins flex gap-2 h-screen overflow-hidden">
-      <div className="font-bold text-center my-auto h-screen w-[15%]">
+      <div className="font-bold text-center my-auto h-screen w-[17%]">
         <SideBar />
       </div>
       <div className="backdrop-blur-lg w-full p-6 mt-5">
