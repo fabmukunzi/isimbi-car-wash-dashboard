@@ -1,12 +1,20 @@
-import { Avatar, Button, Card, Typography } from 'antd';
+import { Avatar, Button, Card, Input, Typography } from 'antd';
 import { defaultProfile } from '../utils/images';
 import Image from 'next/image';
-import { BsArchive, BsForward, BsReply } from 'react-icons/bs';
+import { BsArchive, BsForward, BsReply, BsSendFill } from 'react-icons/bs';
+import { useState } from 'react';
+import { SendOutlined, UploadOutlined } from '@ant-design/icons';
+import { showPopUpMessage } from '../utils/messages/popupMessages';
 
 const SingleMessageView = () => {
   const { Text } = Typography;
+  const { TextArea } = Input;
+  const [onReply, setOnReply] = useState(true);
+  const onMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    console.log('Change:', e.target.value);
+  };
   return (
-    <Card className='bg-secondary'>
+    <Card style={{height:610}} className="bg-secondary overflow-y-scroll">
       <div>
         <Avatar size={52} src={<Image src={defaultProfile} alt="avatar" />} />
         <Text className="text-xl font-semibold ml-5">Robert Fox</Text>
@@ -32,21 +40,46 @@ const SingleMessageView = () => {
           <Text className="cursor-pointer text-primary hover:text-blue-300">
             View All Attachements
           </Text>
+          <br />
+          {onReply && (
+            <div className="relative">
+              <TextArea
+                showCount
+                style={{ height: 80, width: 320, marginBottom: 24 }}
+                onChange={onMessageChange}
+                placeholder="Type here ...."
+              />
+              <BsSendFill
+                fill="#0077B6"
+                size={19}
+                className="absolute left-72 top-7 z-[99] cursor-pointer"
+                onClick={() => {
+                  setOnReply(false);
+                  showPopUpMessage({
+                    type: 'success',
+                    content: 'Message sent!',
+                  });
+                }}
+              />
+              <UploadOutlined size={44} className="ml-5" />
+            </div>
+          )}
           <div className="flex gap-4 my-4">
             <Button
-              className="bg-secondary border-none h-9 font-semibold"
+              className="bg-secondary_dark border-none h-9 font-semibold"
               icon={<BsReply />}
+              onClick={() => setOnReply(true)}
             >
               Reply
             </Button>
             <Button
-              className="bg-secondary border-none h-9 font-semibold"
+              className="bg-secondary_dark border-none h-9 font-semibold"
               icon={<BsArchive />}
             >
               Archive
             </Button>
             <Button
-              className="bg-secondary border-none h-9 font-semibold"
+              className="bg-secondary_dark border-none h-9 font-semibold"
               icon={<BsReply />}
             >
               Forward
@@ -70,15 +103,16 @@ const SingleMessageView = () => {
                       alt="image"
                     />
                     <div>
-                      <Text className="font-bold">Jado USABIMVURA</Text>
-                      <br />
-                      <Text className="font-semibold">Delivery Arrived </Text>
+                      <Text className="font-bold mr-3">Jado</Text>
+                      <Text className="font-semibold mr-3">
+                        Delivery Arrived{' '}
+                      </Text>
                       <Text>Delivery is now going to.........</Text>
+                      <Text className="absolute right-2 font-semibold">
+                        24th, Feb, 2023
+                      </Text>
                     </div>
                   </div>
-                  <Text className="absolute bottom-2 font-semibold right-5">
-                    24th, Feb, 2023
-                  </Text>
                 </Card>
               ))}
           </div>

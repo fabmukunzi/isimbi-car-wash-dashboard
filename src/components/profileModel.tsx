@@ -2,7 +2,7 @@ import { Modal, Card, Button, Typography, Input, Form, message } from 'antd';
 import { FC, useState } from 'react';
 import { defaultProfile } from '../utils/images';
 import Image from 'next/image';
-import { EditFilled, WarningFilled } from '@ant-design/icons';
+import { DeleteOutlined, EditFilled, WarningFilled } from '@ant-design/icons';
 import { showPopUpMessage } from '../utils/messages/popupMessages';
 
 interface ModelProps {
@@ -105,8 +105,8 @@ const ProfileModal: FC<ModelProps> = ({ isOpen, setIsOpen }) => {
             <Button
               onClick={showConfirm}
               type="primary"
-              danger
-              className="h-10"
+              icon={<DeleteOutlined />}
+              className="h-10 bg-secondary flex flex-row-reverse items-center justify-between gap-4 text-black font-bold"
             >
               Delete Account
             </Button>
@@ -116,8 +116,8 @@ const ProfileModal: FC<ModelProps> = ({ isOpen, setIsOpen }) => {
             <Text className="text-primary">12 feb, 2023</Text>
           </div>
         </div>
-        <div className="flex flex-col mt-3">
-          <Form>
+        <div className="flex flex-col justify-start mt-3">
+          <Form layout="vertical">
             <Form.Item label="Full Name">
               <Input value="Fabrice Mukunzi" />
             </Form.Item>
@@ -133,7 +133,7 @@ const ProfileModal: FC<ModelProps> = ({ isOpen, setIsOpen }) => {
               </Form.Item>
               <EditFilled
                 onClick={() => setShowChangePassword(true)}
-                className="-mt-6 cursor-pointer"
+                className="cursor-pointer"
               />
             </div>
           </Form>

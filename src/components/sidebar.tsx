@@ -39,7 +39,7 @@ const items: MenuItem[] = [
   getItem('Messages', '2', <MessageOutlined className="mr-3" />),
   getItem('Analytics', '3', <RiseOutlined className="mr-3" />),
   getItem('Reports', '4', <ContainerOutlined className="mr-3" />),
-  getItem('Archive', '5', <ContainerOutlined className="mr-3" />),
+  // getItem('Archive', '5', <ContainerOutlined className="mr-3" />),
   getItem('Supports', '6', <QuestionCircleOutlined className="mr-3" />),
 ];
 
@@ -75,9 +75,6 @@ const SideBar: React.FC = () => {
 
   return (
     <div className="bg-[#F5F5F5] h-screen w-full rounded-r-3xl py-6 shadow-gray-500 shadow-md">
-      {/* <Button type="primary" onClick={toggleCollapsed} className="bg-blue-500">
-        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-      </Button> */}
       <ProfileModal isOpen={isOpen} setIsOpen={setIsOpen} />
       <Text className="text-primary text-2xl">K Car Wash</Text>
       <Row gutter={[8, 8]} className="w-full">
@@ -93,7 +90,7 @@ const SideBar: React.FC = () => {
           </Col>
           <Col className="text-[10px] col-span-3 flex flex-col font-light text-white">
             <Text className="text-[10px] text-white">Admin</Text>
-            <Text className="text-[10px] font-semibold">Fabrice Mukunzi</Text>
+            <Text className="text-[10px] font-semibold w-full">Fabrice Mukunzi</Text>
             <Text
               className="text-[12px] cursor-pointer text-white"
               onClick={() => setIsOpen(true)}

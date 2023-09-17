@@ -8,7 +8,7 @@ import { BsStopwatch } from 'react-icons/bs';
 const Messages = () => {
   const { Text } = Typography;
   return (
-    <div className='grid grid-cols-5 justify-around w-screen'>
+    <div className='w-screen h-screen'>
       <div className='col-span-2'>
       <Text>Messages</Text>
       <Form className='mt-2'>
@@ -16,7 +16,9 @@ const Messages = () => {
           <Input.Search placeholder="Search" className='w-[27rem]' />
         </Form.Item>
       </Form>
-      <div>
+      </div>
+      <div className='flex gap-6 justify-around'>
+      <div >
         <div className="flex gap-10">
           <Badge count={11} color="green">
             <Button className="bg-primary w-28 h-10 text-white border-none font-bold">
@@ -37,7 +39,7 @@ const Messages = () => {
         <Card
           size="small"
           className="overflow-y-scroll mt-4 bg-secondary"
-          style={{ width: 525, height: 575 }}
+          style={{ width: 525, height: 610 }}
         >
           {Array(8)
             .fill(null)
@@ -73,9 +75,8 @@ const Messages = () => {
             ))}
         </Card>
       </div>
-      </div>
-      <div className='col-span-3'>
-        <div className='flex gap-4 mt-[4.9rem]'>
+      <div className=''>
+        <div className='flex gap-4'>
         <Badge count={6} color="green">
             <Button className="bg-primary w-28 h-10 text-white border-none font-bold">
               Inbox
@@ -91,6 +92,8 @@ const Messages = () => {
         <SingleMessageView />
         </div>
       </div>
+      </div>
+      
     </div>
   );
 };

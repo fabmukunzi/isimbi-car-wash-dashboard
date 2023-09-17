@@ -19,8 +19,8 @@ const Home = () => {
   const { RangePicker } = DatePicker;
   const [activeRole, setActiveRole] = useState('clients');
   return (
-    <div className="w-screen grid h-screen grid-cols-5">
-      <div className="col-span-3">
+    <div className="w-screen flex h-screen gap-6  justify-start">
+      <div className="">
         <div className="w-full flex gap-4">
           <Button className="bg-secondary border-none rounded-xl">Today</Button>
           <Button className="bg-secondary border-none rounded-xl">
@@ -97,7 +97,7 @@ const Home = () => {
                 </Button>
               </Badge>
             </div>
-            <div className="mt-5 h-44 overflow-y-scroll">
+            <div className="mt-5 h-44 w-full overflow-y-scroll">
               {Array(5)
                 .fill(null)
                 .map((_, index) => (
@@ -127,7 +127,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className='cols-span-2 w-full bg-yellow-300'>
+      <div className='w-[27%]'>
         <Card className="bg-secondary text-center">
           <div className="mb-4 flex flex-col">
             <Text className="font-semibold text-lg">Average Reach Time</Text>
