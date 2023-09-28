@@ -1,15 +1,25 @@
 import React from 'react';
-import { Avatar, Button, Checkbox, Form, Input, Typography } from 'antd';
+import { Avatar, Button, Checkbox, Form, Input, Typography, message } from 'antd';
 import Link from 'next/link';
 import { googleIcon } from '@/src/utils/images';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useLoginMutation } from '@/src/store/actions/auth';
 
 const LoginPage: React.FC = () => {
   const router = useRouter();
+  const [login, { isLoading }] = useLoginMutation();
+  const [messageApi, contextHolder] = message.useMessage();
   const { Text } = Typography;
-  const onFinish = (values: any) => {
-    console.log('Success:', values);
+  const onFinish = async(values: any) => {
+    const res=await login(values)
+    if('error' in res){
+      messageApi.open({
+        type: 'error',
+        content: res.error.error||res.error.data.message,
+      });
+    }
+    console.log('Success:', res);
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -18,6 +28,7 @@ const LoginPage: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center gap-6">
+      {contextHolder}
       <Text className="text-center font-bold text-2xl">
         <span className="text-white">Welcome Back , </span>Login
       </Text>
@@ -58,7 +69,8 @@ const LoginPage: React.FC = () => {
             className="rounded-lg w-72 h-10 bg-blue-500 font-bold"
             type="primary"
             htmlType="submit"
-            onClick={() => router.push('/dashboard')}
+            loading={isLoading}
+            // onClick={() => router.push('/dashboard')}
           >
             Login
           </Button>

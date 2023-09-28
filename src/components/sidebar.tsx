@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ContainerOutlined,
   DesktopOutlined,
   HomeOutlined,
   MessageOutlined,
-  PieChartOutlined,
   QuestionCircleOutlined,
   RiseOutlined,
 } from '@ant-design/icons';
@@ -46,7 +45,35 @@ const items: MenuItem[] = [
 const SideBar: React.FC = () => {
   const { Text } = Typography;
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter(); 
+  const [activeKey, setActiveKey] = useState<string>('1');
+
+  const router = useRouter();
+  useEffect(() => {
+    // Use router.pathname to get the current route
+    switch (router.pathname) {
+      case '/dashboard':
+        setActiveKey('1');
+        break;
+      case '/dashboard/messages':
+        setActiveKey('2');
+        break;
+      case '/dashboard/analytics':
+        setActiveKey('3');
+        break;
+      case '/dashboard/reports':
+        setActiveKey('4');
+        break;
+      case '/dashboard/archive':
+        setActiveKey('5');
+        break;
+      case '/dashboard/supports':
+        setActiveKey('6');
+        break;
+      default:
+        setActiveKey('1'); // Set a default key
+        break;
+    }
+  }, [router.pathname]);
   const handleMenuItemClick = (key: string) => {
     switch (key) {
       case '1':
@@ -68,7 +95,7 @@ const SideBar: React.FC = () => {
         router.push('/dashboard/supports');
         break;
       default:
-        router.push('/dashboard')
+        router.push('/dashboard');
         break;
     }
   };
@@ -90,7 +117,9 @@ const SideBar: React.FC = () => {
           </Col>
           <Col className="text-[10px] col-span-3 flex flex-col font-light text-white">
             <Text className="text-[10px] text-white">Admin</Text>
-            <Text className="text-[10px] font-semibold w-full">Fabrice Mukunzi</Text>
+            <Text className="text-[10px] font-semibold w-full">
+              Fabrice Mukunzi
+            </Text>
             <Text
               className="text-[12px] cursor-pointer text-white"
               onClick={() => setIsOpen(true)}
@@ -102,7 +131,8 @@ const SideBar: React.FC = () => {
         </div>
       </Row>
       <Menu
-        defaultSelectedKeys={['1']}
+        defaultSelectedKeys={[activeKey]}
+        selectedKeys={[activeKey]}
         defaultOpenKeys={['sub1']}
         mode="inline"
         items={items}

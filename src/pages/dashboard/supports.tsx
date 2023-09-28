@@ -29,7 +29,7 @@ const Supports = () => {
           <BsSendFill
             fill="#0077B6"
             size={19}
-            className="absolute left-72 top-7 z-[99] cursor-pointer"
+            className="absolute left-72 top-16 z-[99] cursor-pointer"
             onClick={() => {
               showPopUpMessage({
                 type: 'success',

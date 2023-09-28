@@ -11,7 +11,7 @@ const Analtytics = () => {
   const COLORS = ['#59508D', '#F3A533', '#133F5C', '#BBD1C0', '#EB5F5E'];
   return (
     <div className="">
-      <div className="flex gap-6 my-4">
+      <div className="flex gap-6 my-4 w-full">
         <Card
           className="w-full text-center bg-secondary"
           style={{ width: 250, height: 100 }}
@@ -45,8 +45,8 @@ const Analtytics = () => {
           <Text className="font-semibold">Waiting on Queue</Text>
         </Card>
       </div>
-      <div className="grid grid-cols-5 gap-8">
-        <div className="col-span-3 flex flex-col gap-4">
+      <div className="flex  gap-6">
+        <div className="flex flex-col gap-4 w-[70%]">
           <Card style={{ height: 300 }} size="small" className="bg-secondary">
             <div className="flex items-start gap-6 mb-3">
               <Button className="bg-primary text-white">Weekly</Button>
@@ -109,7 +109,7 @@ const Analtytics = () => {
             </div>
           </Card>
         </div>
-        <div className="w-full">
+        <div className="w-[27%]">
           <Card className="bg-secondary text-center">
             <div className="mb-4 flex flex-col">
               <Text className="font-semibold text-lg">Average Reach Time</Text>

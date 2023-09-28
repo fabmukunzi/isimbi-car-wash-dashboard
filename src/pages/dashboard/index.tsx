@@ -19,7 +19,7 @@ const Home = () => {
   const { RangePicker } = DatePicker;
   const [activeRole, setActiveRole] = useState('clients');
   return (
-    <div className="w-screen flex h-screen gap-6  justify-start">
+    <div className="flex h-screen gap-4  justify-between">
       <div className="">
         <div className="w-full flex gap-4">
           <Button className="bg-secondary border-none rounded-xl">Today</Button>
@@ -74,10 +74,10 @@ const Home = () => {
             // referrerpolicy="no-referrer-when-downgrade"
           ></iframe>
         </div>
-        <div className="w-[92%]">
+        <div className="">
           <div className="flex items-center gap-4 my-4">
             <Text>Messages</Text>
-            <Input.Search placeholder="Search" className="w-56" />
+            <Input.Search placeholder="Search" className="w-64" />
           </div>
           <div>
             <div className="flex gap-10">
