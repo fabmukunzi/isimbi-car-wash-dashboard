@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {
   ContainerOutlined,
-  DesktopOutlined,
   HomeOutlined,
   MessageOutlined,
   QuestionCircleOutlined,
   RiseOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import Image from 'next/image';
@@ -14,6 +14,10 @@ import { Button, Menu, Typography, Card, Row, Col } from 'antd';
 import { defaultProfile } from '../utils/images';
 import ProfileModal from './profileModel';
 import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store';
+import { UserSchema } from '../utils/types/user';
+import { logout } from '../store/reducers/users';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -45,9 +49,23 @@ const items: MenuItem[] = [
 const SideBar: React.FC = () => {
   const { Text } = Typography;
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
   const [activeKey, setActiveKey] = useState<string>('1');
-
+  const { user } = useSelector((state: RootState) => state.userReducer);
   const router = useRouter();
+  user?.role === 'Super Admin' &&
+    items.splice(
+      4,
+      0,
+      getItem('Users', '5', <UserOutlined className="mr-3" />)
+    );
+  const handleLogout = () => {
+    try {
+      dispatch(logout());
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     // Use router.pathname to get the current route
     switch (router.pathname) {
@@ -63,7 +81,7 @@ const SideBar: React.FC = () => {
       case '/dashboard/reports':
         setActiveKey('4');
         break;
-      case '/dashboard/archive':
+      case '/dashboard/users':
         setActiveKey('5');
         break;
       case '/dashboard/supports':
@@ -89,7 +107,7 @@ const SideBar: React.FC = () => {
         router.push('/dashboard/reports');
         break;
       case '5':
-        router.push('/dashboard/archive');
+        router.push('/dashboard/users');
         break;
       case '6':
         router.push('/dashboard/supports');
@@ -102,13 +120,13 @@ const SideBar: React.FC = () => {
 
   return (
     <div className="bg-[#F5F5F5] h-screen w-full rounded-r-3xl py-6 shadow-gray-500 shadow-md">
-      <ProfileModal isOpen={isOpen} setIsOpen={setIsOpen} />
+      <ProfileModal user={user} isOpen={isOpen} setIsOpen={setIsOpen} />
       <Text className="text-primary text-2xl">K Car Wash</Text>
       <Row gutter={[8, 8]} className="w-full">
         <div className="bg-primary w-full grid grid-cols-5 my-5 text-left px-1 py-2 rounded-xl mx-2">
           <Col className="col-span-2">
             <Image
-              src={defaultProfile}
+              src={user?.avatar || defaultProfile}
               alt="image"
               width={52}
               height={52}
@@ -116,9 +134,9 @@ const SideBar: React.FC = () => {
             />
           </Col>
           <Col className="text-[10px] col-span-3 flex flex-col font-light text-white">
-            <Text className="text-[10px] text-white">Admin</Text>
+            <Text className="text-[10px] text-white">{user?.role}</Text>
             <Text className="text-[10px] font-semibold w-full">
-              Fabrice Mukunzi
+              {user?.firstname + ' ' + user?.lastname}
             </Text>
             <Text
               className="text-[12px] cursor-pointer text-white"
@@ -126,7 +144,13 @@ const SideBar: React.FC = () => {
             >
               My Account
             </Text>
-            <Button className="bg-white my-1">Logout</Button>
+            <Button
+              // loading={isLoading}
+              onClick={handleLogout}
+              className="bg-white my-1"
+            >
+              Logout
+            </Button>
           </Col>
         </div>
       </Row>

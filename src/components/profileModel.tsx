@@ -7,9 +7,10 @@ import { showPopUpMessage } from '../utils/messages/popupMessages';
 
 interface ModelProps {
   isOpen: boolean;
+  user: any;
   setIsOpen: (isOpen: boolean) => void;
 }
-const ProfileModal: FC<ModelProps> = ({ isOpen, setIsOpen }) => {
+const ProfileModal: FC<ModelProps> = ({ user, isOpen, setIsOpen }) => {
   const { Text } = Typography;
   const { confirm, destroyAll } = Modal;
   const [showChangePassword, setShowChangePassword] = useState(false);
@@ -26,7 +27,7 @@ const ProfileModal: FC<ModelProps> = ({ isOpen, setIsOpen }) => {
       title: 'Do you Want to delete this Account?',
       icon: <WarningFilled />,
       footer: [
-        <div key="footer" className="flex justify-end gap-3">
+        <div key={user?.id} className="flex justify-end gap-3">
           <Button onClick={destroyAll} className="w-24 h-10 rounded-">
             Cancel
           </Button>
@@ -97,7 +98,7 @@ const ProfileModal: FC<ModelProps> = ({ isOpen, setIsOpen }) => {
       <Card>
         <div className="flex gap-7">
           <Image
-            src={defaultProfile}
+            src={user?.avatar || defaultProfile}
             alt="image"
             className="w-28 h-28 rounded-lg object-cover"
           />
@@ -119,22 +120,21 @@ const ProfileModal: FC<ModelProps> = ({ isOpen, setIsOpen }) => {
         <div className="flex flex-col justify-start mt-3">
           <Form layout="vertical">
             <Form.Item label="Full Name">
-              <Input value="Fabrice Mukunzi" />
+              <Input defaultValue={user?.firstname + ' ' + user?.lastname} />
             </Form.Item>
             <Form.Item label="Email">
-              <Input value="mukunzifabrice77@gmail.com" />
+              <Input defaultValue={user?.email} />
             </Form.Item>
             <Form.Item label="Telephone">
-              <Input value="0780403244" />
+              <Input defaultValue={user?.phone} />
             </Form.Item>
             <div className="flex items-center w-full justify-between">
-              <Form.Item label="Password" className="w-[90%]">
-                <Input.Password value="passwod" />
-              </Form.Item>
-              <EditFilled
+              <Button
                 onClick={() => setShowChangePassword(true)}
-                className="cursor-pointer"
-              />
+                className="cursor-pointer bg-primary text-white"
+              >
+                Change Password
+              </Button>
             </div>
           </Form>
         </div>
