@@ -4,6 +4,7 @@ import { defaultProfile } from '../utils/images';
 import Image from 'next/image';
 import { DeleteOutlined, EditFilled, WarningFilled } from '@ant-design/icons';
 import { showPopUpMessage } from '../utils/messages/popupMessages';
+import { formatDate } from '../utils/formatdate';
 
 interface ModelProps {
   isOpen: boolean;
@@ -114,7 +115,7 @@ const ProfileModal: FC<ModelProps> = ({ user, isOpen, setIsOpen }) => {
             <br />
             <Text>Account Since</Text>
             <br />
-            <Text className="text-primary">12 feb, 2023</Text>
+            <Text className="text-primary">{formatDate(user?.createdAt)}</Text>
           </div>
         </div>
         <div className="flex flex-col justify-start mt-3">
