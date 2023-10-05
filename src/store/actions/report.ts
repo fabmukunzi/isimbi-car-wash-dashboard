@@ -1,22 +1,40 @@
 import { baseAPI } from '../api';
-import { ReportPayload } from '@/src/utils/types/report';
 
 const reportEndpoints = baseAPI.injectEndpoints({
   endpoints: (builder) => ({
     createReport: builder.mutation<{ data: object }, object>({
       query: (body) => ({
-        url: 'reports',
+        url: 'reports/expenses',
         method: 'POST',
         body,
       }),
     }),
-    getReports: builder.query<{reports:any} , string>({
-      query: (query) => ({
-        url: `reports?${query}`,
+    createIncome: builder.mutation<{ data: object }, object>({
+      query: (body) => ({
+        url: 'reports/incomes',
+        method: 'POST',
+        body,
+      }),
+    }),
+    getAnalytics: builder.query<{weeklyPerformanceOverview?:any,weeklyExpenses?:any} , void>({
+      query: () => ({
+        url: `analytics`,
+        method: 'GET',
+      }),
+    }),
+    getExpenses: builder.query<{reports:any} , void>({
+      query: () => ({
+        url: `reports/expenses`,
+        method: 'GET',
+      }),
+    }),
+    getIncome: builder.query<{reports:any} , void>({
+      query: () => ({
+        url: `reports/incomes`,
         method: 'GET',
       }),
     }),
   }),
 });
 
-export const { useCreateReportMutation, useGetReportsQuery } = reportEndpoints;
+export const { useCreateReportMutation,useCreateIncomeMutation,useGetAnalyticsQuery, useGetExpensesQuery, useGetIncomeQuery } = reportEndpoints;

@@ -5,4 +5,5 @@ export type ReportPayload={
     quantity?:number
     price?:number
     delivery_cost?:number
+    amount?:number
 }

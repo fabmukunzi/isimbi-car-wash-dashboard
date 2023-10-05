@@ -23,8 +23,24 @@ const userEndpoints = baseAPI.injectEndpoints({
         method: 'GET',
       }),
     }),
+    changeStatus: builder.mutation<
+      { isApproved: boolean; id: string },
+      { isApproved: boolean; id: string }
+    >({
+      query: ({ isApproved, id }) => ({
+        url: `users/disable-enable/${id}`,
+        method: 'PUT',
+        body: {
+          isApproved,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useSignupMutation, useGetAllUsersQuery } =
-  userEndpoints;
+export const {
+  useLoginMutation,
+  useSignupMutation,
+  useChangeStatusMutation,
+  useGetAllUsersQuery,
+} = userEndpoints;

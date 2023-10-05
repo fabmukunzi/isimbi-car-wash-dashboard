@@ -48,13 +48,13 @@ const Analtytics = () => {
       <div className="flex  gap-6">
         <div className="flex flex-col gap-4 w-[70%]">
           <Card style={{ height: 300 }} size="small" className="bg-secondary">
-            <div className="flex items-start gap-6 mb-3">
+            {/* <div className="flex items-start gap-6 mb-3">
               <Button className="bg-primary text-white">Weekly</Button>
               <Button className="bg-secondary_dark">Monthly</Button>
-            </div>
+            </div> */}
             <div className="flex flex-col gap-2">
               <Text className="font-bold text-xl mb-4">
-                Performance Overview
+                Weekly Performance Overview
               </Text>
               <Charts />
             </div>
