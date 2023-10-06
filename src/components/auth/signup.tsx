@@ -12,22 +12,20 @@ import Link from 'next/link';
 import { googleIcon } from '@/src/utils/images';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useLoginMutation } from '@/src/store/actions/auth';
+import { useSignupMutation } from '@/src/store/actions/auth';
 import { useDispatch } from 'react-redux';
-import { updateUser } from '@/src/store/reducers/users';
 
 type ApiResponse = {
   error?: { error?: string; data?: { message: string } };
-  data?: { user: any; token: string };
+  data?: { user: any; token: string; message:string };
 };
-const LoginPage: React.FC = () => {
+const SignupPage: React.FC = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const [login, { isLoading }] = useLoginMutation();
+  const [signup, { isLoading }] = useSignupMutation();
   const [messageApi, contextHolder] = message.useMessage();
   const { Text } = Typography;
   const onFinish = async (values: any) => {
-    const res = (await login(values)) as ApiResponse;
+    const res = (await signup(values)) as ApiResponse;
     if (res.error) {
       messageApi.open({
         type: 'error',
@@ -37,9 +35,11 @@ const LoginPage: React.FC = () => {
           'An error occurred.',
       });
     } else if (res.data) {
-      localStorage.setItem('car_wash_token', res.data.token);
-      dispatch(updateUser(res.data.user));
-      router.push('/dashboard');
+      messageApi.open({
+        type: 'success',
+        content: res.data.message,
+      });
+      router.push('/');
     }
   };
 
@@ -50,9 +50,7 @@ const LoginPage: React.FC = () => {
   return (
     <div className="flex flex-col items-center gap-6">
       {contextHolder}
-      <Text className="text-center font-bold text-2xl">
-        <span className="text-white">Welcome Back , </span>Login
-      </Text>
+      <Text className="text-center font-bold text-2xl">Create an account</Text>
       <Form
         name="basic"
         initialValues={{ remember: true }}
@@ -62,7 +60,31 @@ const LoginPage: React.FC = () => {
         autoComplete="on"
         className="flex items-center flex-col"
       >
-        <Form.Item<LoginPayload>
+        <Form.Item<SignupPayload>
+          label="First Name"
+          name="firstname"
+          rules={[{ required: true, message: 'Please input your firstname!' }]}
+        >
+          <Input className="w-72" />
+        </Form.Item>
+        <Form.Item<SignupPayload>
+          label="Last name"
+          name="lastname"
+          rules={[{ required: true, message: 'Please input your lastname!' }]}
+        >
+          <Input className="w-72" />
+        </Form.Item>
+        <Form.Item<SignupPayload>
+          label="Phone"
+          name="phone"
+          rules={[
+            { min: 10, message: 'Please input a valid phone number!' },
+            { required: true, message: 'Please input your phone number!' },
+          ]}
+        >
+          <Input className="w-72" />
+        </Form.Item>
+        <Form.Item<SignupPayload>
           label="Email"
           name="email"
           rules={[
@@ -70,30 +92,23 @@ const LoginPage: React.FC = () => {
             { required: true, message: 'Please input your email!' },
           ]}
         >
-          <Input className="py-2 w-72" />
+          <Input className="w-72" />
         </Form.Item>
-
-        <Form.Item<LoginPayload>
+        <Form.Item<SignupPayload>
           label="Password"
           name="password"
           rules={[{ required: true, message: 'Please input your password!' }]}
         >
-          <Input.Password className="py-2 w-72" />
+          <Input.Password className="w-72" />
         </Form.Item>
-
-        <Link href="#" className="-mt-3 mb-5 -mr-44 text-white">
-          Forgot password?
-        </Link>
-
         <Form.Item>
           <Button
             className="rounded-lg w-72 h-10 bg-blue-500 font-bold"
             type="primary"
             htmlType="submit"
             loading={isLoading}
-            // onClick={() => router.push('/dashboard')}
           >
-            Login
+            Signup
           </Button>
         </Form.Item>
         <Form.Item>
@@ -101,14 +116,16 @@ const LoginPage: React.FC = () => {
             className="rounded-lg w-72 h-10 bg-white gap-2 font-bold flex justify-center items-center"
             htmlType="submit"
           >
-            <Text className="text-blue-500 text-md">Sign in With Google </Text>
+            <Text className="text-blue-500 text-md">Sign up With Google </Text>
             <Image alt="image" height={25} width={25} src={googleIcon} />
           </Button>
         </Form.Item>
-        <Link href="/signup">Create an account</Link>
+        <Text>
+          Already a member? <Link href="/">Login</Link>
+        </Text>
       </Form>
     </div>
   );
 };
 
-export default LoginPage;
+export default SignupPage;

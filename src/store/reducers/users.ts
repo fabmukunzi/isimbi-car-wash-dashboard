@@ -1,6 +1,7 @@
+import { UserSchema } from '@/src/utils/types/user';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState: { token?: string | undefined; user?: object | undefined } =
+const initialState: { token?: string | undefined; user?: UserSchema | undefined } =
   {
     token: undefined,
     user: undefined,
@@ -14,23 +15,20 @@ export const userSlice = createSlice({
       const { payload } = action;
       state.token = payload;
     },
-    updateUser: (state, action: PayloadAction<object>) => {
+    updateUser: (state, action: PayloadAction<UserSchema>) => {
       const { payload } = action;
       state.user = payload;
     },
-    // logout: (state) => {
-    //   state = initialState
-    //   clearStorage()
-    //   window.location.href = routes.login.url
-    // },
+    logout: (state) => {
+      state.token = undefined
+      state.user = undefined
+      localStorage.removeItem('car_wash_token');
+      window.location.href = '/';
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {
-  //   logout,
-  updateUser,
-  setToken,
-} = userSlice.actions;
+export const { logout, updateUser, setToken } = userSlice.actions;
 
 export default userSlice.reducer;

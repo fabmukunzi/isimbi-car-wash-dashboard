@@ -5,14 +5,12 @@ import { RootState } from './index'
 export const baseAPI = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_API_URL,
-    prepareHeaders: async (headers, { getState }) => {
-      const {
-        userReducer: { token },
-      } = getState() as RootState
+    prepareHeaders: async (headers) => {
+      const token=localStorage.getItem('car_wash_token')
       if (token) headers.set('authorization', `Bearer ${token}`)
       return headers
     },
   }),
-  tagTypes: ['Profile'],
+  tagTypes: ['Profile','User','Report'],
   endpoints: () => ({}),
 })

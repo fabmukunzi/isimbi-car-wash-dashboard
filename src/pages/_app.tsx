@@ -7,6 +7,7 @@ import Login from './login';
 import { Provider } from 'react-redux';
 import { persistor, store } from '../store';
 import { PersistGate } from 'redux-persist/integration/react';
+import SignUp from './signup';
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
@@ -18,6 +19,8 @@ const App = ({ Component, pageProps }: AppProps) => {
           <DashboardLayout>
             <Component {...pageProps} />
           </DashboardLayout>
+        ) : currentRoute === 'signup' ? (
+          <SignUp {...pageProps} />
         ) : (
           <Login {...pageProps} />
         )}
