@@ -10,7 +10,7 @@ const Analtytics = () => {
   const { RangePicker } = DatePicker;
   const COLORS = ['#59508D', '#F3A533', '#133F5C', '#BBD1C0', '#EB5F5E'];
   return (
-    <div className="">
+    <div className="h-screen">
       <div className="flex gap-6 my-4 w-full">
         <Card
           className="w-full text-center bg-secondary"

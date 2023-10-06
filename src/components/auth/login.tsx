@@ -19,6 +19,8 @@ const LoginPage: React.FC = () => {
         content: res.error.error||res.error.data.message,
       });
     }
+    else
+    router.push('/dashoard')
     console.log('Success:', res);
   };
 

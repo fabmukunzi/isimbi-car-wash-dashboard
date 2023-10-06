@@ -101,7 +101,7 @@ const SideBar: React.FC = () => {
   };
 
   return (
-    <div className="bg-[#F5F5F5] h-screen w-full rounded-r-3xl py-6 shadow-gray-500 shadow-md">
+    <div className="bg-[#F5F5F5] h-screen fixed rounded-r-3xl py-6 shadow-gray-500 shadow-md">
       <ProfileModal isOpen={isOpen} setIsOpen={setIsOpen} />
       <Text className="text-primary text-2xl">K Car Wash</Text>
       <Row gutter={[8, 8]} className="w-full">

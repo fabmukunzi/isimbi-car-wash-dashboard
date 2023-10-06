@@ -7,7 +7,7 @@ interface ILayout {
 const DashboardLayout: FC<ILayout> = ({ children }) => {
   return (
     <div className="font-poppins flex gap-4">
-      <div className="font-bold text-center my-auto h-screen w-1/6">
+      <div className="font-bold text-center my-0 h-screen w-1/6">
         <SideBar />
       </div>
       <div className="backdrop-blur-lg w-screen p-2 mt-2">
