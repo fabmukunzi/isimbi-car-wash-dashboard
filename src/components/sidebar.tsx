@@ -8,9 +8,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Button, Menu, Typography, Card, Row, Col } from 'antd';
+import { Button, Menu, Typography, Card, Row, Col, Image } from 'antd';
 import { defaultProfile } from '../utils/images';
 import ProfileModal from './profileModel';
 import { useRouter } from 'next/router';
@@ -126,11 +124,11 @@ const SideBar: React.FC = () => {
         <div className="bg-primary w-full grid grid-cols-5 my-5 text-left px-1 py-2 rounded-xl mx-2">
           <Col className="col-span-2">
             <Image
-              src={user?.avatar || defaultProfile}
+              src={user?.avatar as string | undefined}
               alt="image"
               width={52}
               height={52}
-              className="rounded-full"
+              className="rounded-full object-cover"
             />
           </Col>
           <Col className="text-[10px] col-span-3 flex flex-col font-light text-white">

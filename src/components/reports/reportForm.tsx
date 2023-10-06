@@ -2,6 +2,7 @@ import {
   useCreateIncomeMutation,
   useCreateReportMutation,
 } from '@/src/store/actions/report';
+import { expensesCategories, incomeCategories } from '@/src/utils/constants';
 import { getBase64 } from '@/src/utils/handleUpload';
 import { ReportPayload } from '@/src/utils/types/report';
 import { PlusOutlined } from '@ant-design/icons';
@@ -92,7 +93,7 @@ const ReportForm: FC<IReport> = ({ handleCancel, reportType }) => {
           className="w-full"
           rules={[{ required: true, message: 'Please category' }]}
         >
-          <Select options={[{ label: 'cars', value: 1 }]} />
+          <Select options={reportType==='Expense'?expensesCategories:incomeCategories} />
         </Form.Item>
         <Form.Item<ReportPayload>
           label="Date"

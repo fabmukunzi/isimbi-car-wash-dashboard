@@ -1,13 +1,10 @@
 import {
-  useCreateReportMutation,
   useGetAnalyticsQuery,
   useGetExpensesQuery,
   useGetIncomeQuery,
 } from '@/src/store/actions/report';
-import { getBase64 } from '@/src/utils/handleUpload';
 import { defaultProfile } from '@/src/utils/images';
-import { ReportPayload } from '@/src/utils/types/report';
-import { LineOutlined, PlusOutlined } from '@ant-design/icons';
+import { LineOutlined } from '@ant-design/icons';
 import {
   Avatar,
   Button,
@@ -19,9 +16,7 @@ import {
   Modal,
   Space,
   Typography,
-  UploadFile,
 } from 'antd';
-import { RcFile, UploadProps } from 'antd/es/upload';
 import { FC, useState } from 'react';
 import { formatDate } from '../../utils/formatdate';
 import ReportForm from '@/src/components/reports/reportForm';
@@ -215,7 +210,7 @@ const Reports: FC = () => {
             <Text className="font-semibold">Total Costs</Text>
             {totalCost?.weeklyExpenses.map((expense: number, i: number) => (
               <div key={i} className="flex gap-6 justify-between">
-                <Text>Week {i + 1}</Text>
+                <Text>Week {4 - i}</Text>
                 <LineOutlined className="text-primary" />
                 <Text>{expense} RWF</Text>
               </div>

@@ -64,7 +64,7 @@ const Analtytics = () => {
               <Button className="bg-primary text-white">
                 Expenses Overview
               </Button>
-              <Button className="bg-secondary_dark">Profit Overview</Button>
+              {/* <Button className="bg-secondary_dark">Income Overview</Button> */}
             </div>
             <div className="flex items-start gap-6 mb-1">
               <Button className="bg-primary text-white">Weekly</Button>

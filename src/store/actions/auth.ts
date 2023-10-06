@@ -23,6 +23,26 @@ const userEndpoints = baseAPI.injectEndpoints({
         method: 'GET',
       }),
     }),
+    updateUser: builder.mutation<{ data: any }, { id: string; body: any }>({
+      query: ({ id, body }) => ({
+        url: `users/${id}`,
+        method: 'PUT',
+        body,
+      }),
+    }),
+    changePassword: builder.mutation<
+      { data: any },
+      { old_password: string; new_password: string }
+    >({
+      query: ({ old_password, new_password }) => ({
+        url: 'users/change-password',
+        method: 'PATCH',
+        body: {
+          old_password,
+          new_password,
+        },
+      }),
+    }),
     changeStatus: builder.mutation<
       { isApproved: boolean; id: string },
       { isApproved: boolean; id: string }
@@ -43,4 +63,6 @@ export const {
   useSignupMutation,
   useChangeStatusMutation,
   useGetAllUsersQuery,
+  useUpdateUserMutation,
+  useChangePasswordMutation,
 } = userEndpoints;
