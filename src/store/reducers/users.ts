@@ -15,7 +15,7 @@ export const userSlice = createSlice({
       const { payload } = action;
       state.token = payload;
     },
-    updateUser: (state, action: PayloadAction<UserSchema>) => {
+    updateUser: (state, action: PayloadAction<UserSchema|undefined>) => {
       const { payload } = action;
       state.user = payload;
     },

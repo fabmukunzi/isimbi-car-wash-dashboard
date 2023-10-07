@@ -14,7 +14,7 @@ const DashboardLayout: FC<ILayout> = ({ children }) => {
   if (!localStorage.getItem('car_wash_token') || !user) router.push('/');
   return (
     <div className="font-poppins flex gap-4">
-      <div className="font-bold text-center my-0 h-screen w-1/6">
+      <div className="font-bold text-center my-0 h-screen w-1/6 relative">
         <SideBar />
       </div>
       <div className="backdrop-blur-lg w-screen p-2 mt-2">

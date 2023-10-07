@@ -12,7 +12,6 @@ import {
   Upload,
 } from 'antd';
 import {
-  EditFilled,
   WarningFilled,
   UploadOutlined,
   DeleteOutlined,
@@ -20,9 +19,12 @@ import {
 import { formatDate } from '../utils/formatdate';
 import {
   useChangePasswordMutation,
-  useUpdateUserMutation,
+  useGetUserProfileQuery,
+  useUpdateUserProfileMutation,
 } from '../store/actions/auth';
 import { useDispatch } from 'react-redux';
+import { updateUser } from '../store/reducers/users';
+import { useForm } from 'antd/lib/form/Form'
 
 interface ModelProps {
   isOpen: boolean;
@@ -35,9 +37,12 @@ const ProfileModal: FC<ModelProps> = ({ user, isOpen, setIsOpen }) => {
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [messageApi, contextHolder] = message.useMessage();
-  const [updateUser, { isLoading: uload }] = useUpdateUserMutation();
+  const [updateUserprofile, { isLoading: uload }] =
+    useUpdateUserProfileMutation();
   const [changePassword, { isLoading: pload }] = useChangePasswordMutation();
-
+  const { data } = useGetUserProfileQuery();
+  const [form]=useForm();
+  const dispatch = useDispatch();
   const handleCancel = () => {
     setIsOpen(false);
   };
@@ -62,7 +67,7 @@ const ProfileModal: FC<ModelProps> = ({ user, isOpen, setIsOpen }) => {
     setAvatarFile(file);
   };
 
-  const handleUpdate = (values: any) => {
+  const handleUpdate = async (values: any) => {
     const formData = new FormData();
     formData.append('firstname', values.firstname);
     formData.append('lastname', values.lastname);
@@ -71,7 +76,10 @@ const ProfileModal: FC<ModelProps> = ({ user, isOpen, setIsOpen }) => {
     if (avatarFile) {
       formData.append('avatar', avatarFile);
     }
-    updateUser({ body: formData, id: user.id });
+    await updateUserprofile({ body: formData });
+    dispatch(updateUser(data?.user));
+    handleCancel();
+    form.resetFields();
   };
   const handlePassword = async (values: any) => {
     const res: any = await changePassword({
@@ -84,7 +92,13 @@ const ProfileModal: FC<ModelProps> = ({ user, isOpen, setIsOpen }) => {
   };
 
   return (
-    <Modal title="Profile" open={isOpen} onCancel={handleCancel} footer={[]}>
+    <Modal
+      title="Profile"
+      className="-mt-10"
+      open={isOpen}
+      onCancel={handleCancel}
+      footer={[]}
+    >
       {contextHolder}
       <Modal
         title="Change Password!"
@@ -93,7 +107,7 @@ const ProfileModal: FC<ModelProps> = ({ user, isOpen, setIsOpen }) => {
         width={255}
         footer={[]}
       >
-        <Form layout="vertical" onFinish={handlePassword}>
+        <Form form={form} layout="vertical" onFinish={handlePassword}>
           <Form.Item label="Old Password" name="old_password">
             <Input.Password />
           </Form.Item>

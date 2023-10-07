@@ -16,19 +16,26 @@ const reportEndpoints = baseAPI.injectEndpoints({
         body,
       }),
     }),
-    getAnalytics: builder.query<{weeklyPerformanceOverview?:any,weeklyExpenses?:any} , void>({
+    getAnalytics: builder.query<
+      {
+        weeklyPerformanceOverview?: any;
+        weeklyExpenses?: any;
+        groupedByCategory?: any;
+      },
+      void
+    >({
       query: () => ({
         url: `analytics`,
         method: 'GET',
       }),
     }),
-    getExpenses: builder.query<{reports:any} , void>({
+    getExpenses: builder.query<{ reports: any }, void>({
       query: () => ({
         url: `reports/expenses`,
         method: 'GET',
       }),
     }),
-    getIncome: builder.query<{reports:any} , void>({
+    getIncome: builder.query<{ reports: any }, void>({
       query: () => ({
         url: `reports/incomes`,
         method: 'GET',
@@ -37,4 +44,10 @@ const reportEndpoints = baseAPI.injectEndpoints({
   }),
 });
 
-export const { useCreateReportMutation,useCreateIncomeMutation,useGetAnalyticsQuery, useGetExpensesQuery, useGetIncomeQuery } = reportEndpoints;
+export const {
+  useCreateReportMutation,
+  useCreateIncomeMutation,
+  useGetAnalyticsQuery,
+  useGetExpensesQuery,
+  useGetIncomeQuery,
+} = reportEndpoints;

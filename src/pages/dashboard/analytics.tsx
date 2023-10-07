@@ -1,5 +1,6 @@
 import Charts from '@/src/components/charts/chart';
 import Pchart from '@/src/components/charts/piechart';
+import { useGetAnalyticsQuery } from '@/src/store/actions/report';
 import { defaultProfile } from '@/src/utils/images';
 import { Badge, Button, Card, DatePicker, Space, Typography } from 'antd';
 import Image from 'next/image';
@@ -7,6 +8,8 @@ import React from 'react';
 
 const Analtytics = () => {
   const { Text } = Typography;
+  const { data, isLoading } = useGetAnalyticsQuery();
+  const totalValue = data?.groupedByCategory?.reduce((total:number, exp:any) => total + exp.value, 0);
   const { RangePicker } = DatePicker;
   const COLORS = ['#59508D', '#F3A533', '#133F5C', '#BBD1C0', '#EB5F5E'];
   return (
@@ -47,7 +50,12 @@ const Analtytics = () => {
       </div>
       <div className="flex  gap-6">
         <div className="flex flex-col gap-4 w-[70%]">
-          <Card style={{ height: 300 }} size="small" className="bg-secondary">
+          <Card
+            loading={isLoading}
+            style={{ height: 300 }}
+            size="small"
+            className="bg-secondary"
+          >
             {/* <div className="flex items-start gap-6 mb-3">
               <Button className="bg-primary text-white">Weekly</Button>
               <Button className="bg-secondary_dark">Monthly</Button>
@@ -56,10 +64,14 @@ const Analtytics = () => {
               <Text className="font-bold text-xl mb-4">
                 Weekly Performance Overview
               </Text>
-              <Charts />
+              <Charts data={data?.weeklyPerformanceOverview} />
             </div>
           </Card>
-          <Card style={{ height: 310 }} className="bg-secondary">
+          <Card
+            loading={isLoading}
+            style={{ height: 310 }}
+            className="bg-secondary"
+          >
             <div className="flex items-start gap-6 mb-3">
               <Button className="bg-primary text-white">
                 Expenses Overview
@@ -78,31 +90,32 @@ const Analtytics = () => {
             </div>
             <div className="flex gap-10">
               <div className="w-full">
-                {Array(5)
-                  .fill(null)
-                  .map((_, index) => (
-                    <div key={index} className="my-3 flex gap-4">
-                      <Badge
-                        className={`bg-${COLORS[index]} p-1 h-5 w-5 rounded-full`}
-                      >
-                        {' '}
-                      </Badge>
-                      <div className="border-b border-slate-400 w-full flex justify-between">
-                        <Text>Machine & Detergents</Text>
-                        <Text>256,300 Rwf</Text>
-                      </div>
+                {data?.groupedByCategory?.map((exp: any, index: number) => (
+                  <div key={index} className="my-3 flex gap-4">
+                    <div
+                    // count={' '}
+                    style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                      className={` p-1 h-5 w-5 rounded-full`}
+                    >
+                      {' '}
                     </div>
-                  ))}
+                    <div className="border-b-[0.1px] border-slate-300 w-full flex justify-between">
+                      <Text>{exp.name}</Text>
+                      <Text>{exp.value.toLocaleString()} Rwf</Text>
+                    </div>
+                  </div>
+                ))}
               </div>
               <div>
                 <Card
+                  loading={isLoading}
                   style={{ width: 180, height: 200 }}
                   className="bg-secondary border border-secondary_dark"
                   size="small"
                 >
-                  <Pchart />
+                  <Pchart data={data?.groupedByCategory} />
                   <Text>
-                    Total : <span className="text-primary">1,250,300 RWF</span>
+                    Total : <span className="text-primary">{totalValue?.toLocaleString()} RWF</span>
                   </Text>
                 </Card>
               </div>

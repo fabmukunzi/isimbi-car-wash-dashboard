@@ -14,6 +14,7 @@ import {
   Image,
   MenuProps,
   Modal,
+  Segmented,
   Space,
   Typography,
 } from 'antd';
@@ -34,6 +35,9 @@ const Reports: FC = () => {
   const handleCancel = () => {
     setIsOpen(false);
   };
+  const handleReportChange=(value:any)=>{
+    setReportType(value)
+  }
   let data: { reports: any };
   if (reportType === 'Expense') data = expenseData || { reports: [] };
   else if (reportType === 'Income') data = incomeData || { reports: [] };
@@ -73,26 +77,7 @@ const Reports: FC = () => {
       <div className="flex flex-col gap-4 w-[70%]">
         <Card className="bg-secondary" loading={incomeLoading}>
           <div className="flex gap-5 my-3">
-            <Button
-              onClick={() => setReportType('Expense')}
-              className={`${
-                reportType === 'Expense'
-                  ? 'bg-primary text-white'
-                  : 'bg-secondary border-none shadow'
-              }`}
-            >
-              Expenses
-            </Button>
-            <Button
-              onClick={() => setReportType('Income')}
-              className={`${
-                reportType === 'Income'
-                  ? 'bg-primary text-white'
-                  : 'bg-secondary border-none shadow'
-              }`}
-            >
-              Incomes
-            </Button>
+            <Segmented onChange={handleReportChange} size='middle' options={['Expense','Income']} />
           </div>
           <div className="flex gap-7 my-3">
             <Button className="bg-primary w-32 text-white">Today</Button>
@@ -132,7 +117,7 @@ const Reports: FC = () => {
                       </Text>
                       <Text>
                         Unit Price :{' '}
-                        <span className="text-primary">{report.price}</span>
+                        <span className="text-primary">{report.price?.toLocaleString()+' RWF'}</span>
                       </Text>
                     </>
                   )}
@@ -140,8 +125,8 @@ const Reports: FC = () => {
                     Total :{' '}
                     <span className="text-primary">
                       {reportType === 'Expense'
-                        ? report.price * report.quantity
-                        : report.amount}
+                        ? (report.price * report.quantity)?.toLocaleString()+' RWF'
+                        : report.amount?.toLocaleString()+' RWF'}
                     </span>
                   </Text>
                 </div>
@@ -212,7 +197,7 @@ const Reports: FC = () => {
               <div key={i} className="flex gap-6 justify-between">
                 <Text>Week {4 - i}</Text>
                 <LineOutlined className="text-primary" />
-                <Text>{expense} RWF</Text>
+                <Text>{expense.toLocaleString()} RWF</Text>
               </div>
             ))}
           </Card>

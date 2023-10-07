@@ -23,9 +23,15 @@ const userEndpoints = baseAPI.injectEndpoints({
         method: 'GET',
       }),
     }),
-    updateUser: builder.mutation<{ data: any }, { id: string; body: any }>({
-      query: ({ id, body }) => ({
-        url: `users/${id}`,
+    getUserProfile: builder.query<{ user: UserSchema }, void>({
+      query: () => ({
+        url: 'users/profile',
+        method: 'GET',
+      }),
+    }),
+    updateUserProfile: builder.mutation<{ data: any }, { body: any }>({
+      query: ({ body }) => ({
+        url: 'users',
         method: 'PUT',
         body,
       }),
@@ -63,6 +69,7 @@ export const {
   useSignupMutation,
   useChangeStatusMutation,
   useGetAllUsersQuery,
-  useUpdateUserMutation,
+  useUpdateUserProfileMutation,
   useChangePasswordMutation,
+  useGetUserProfileQuery,
 } = userEndpoints;

@@ -14,7 +14,6 @@ import ProfileModal from './profileModel';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
-import { UserSchema } from '../utils/types/user';
 import { logout } from '../store/reducers/users';
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -49,6 +48,7 @@ const SideBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const [activeKey, setActiveKey] = useState<string>('1');
+
   const { user } = useSelector((state: RootState) => state.userReducer);
   const router = useRouter();
   user?.role === 'Super Admin' &&
@@ -117,7 +117,7 @@ const SideBar: React.FC = () => {
   };
 
   return (
-    <div className="bg-[#F5F5F5] h-screen w-full rounded-r-3xl py-6 shadow-gray-500 shadow-md">
+    <div className="bg-[#F5F5F5] h-screen fixed rounded-r-3xl py-6 shadow-gray-500 shadow-md">
       <ProfileModal user={user} isOpen={isOpen} setIsOpen={setIsOpen} />
       <Text className="text-primary text-2xl">K Car Wash</Text>
       <Row gutter={[8, 8]} className="w-full">

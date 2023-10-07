@@ -1,4 +1,5 @@
 import { useGetAnalyticsQuery } from '@/src/store/actions/report';
+import { FC } from 'react';
 import {
   CartesianGrid,
   Legend,
@@ -8,11 +9,12 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-
-const Charts = () => {
-  const { data } = useGetAnalyticsQuery();
+interface CProps{
+  data:Array<object>
+}
+const Charts:FC<CProps> = ({ data }) => {
   return (
-    <LineChart width={700} height={200} data={data?.weeklyPerformanceOverview}>
+    <LineChart width={700} height={200} data={data}>
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="name" />
       <YAxis />
