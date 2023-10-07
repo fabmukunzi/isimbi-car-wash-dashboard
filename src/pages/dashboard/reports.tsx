@@ -28,19 +28,27 @@ const Reports: FC = () => {
   const { Text } = Typography;
   const [isOpen, setIsOpen] = useState(false);
   const [reportType, setReportType] = useState('Expense');
-  const { data: expenseData } = useGetExpensesQuery();
-  const { data: incomeData, isLoading: incomeLoading } = useGetIncomeQuery();
+  const [isFetch,setIsFetch]=useState<boolean>(false)
+  const [toview, setToview] = useState('Expense');
+  const expRes = useGetExpensesQuery();
+  const incRes = useGetIncomeQuery();
   const { data: totalCost, isLoading: tloading } = useGetAnalyticsQuery();
   const { data: userData, isLoading: uloading } = useGetAllUsersQuery();
   const handleCancel = () => {
     setIsOpen(false);
   };
+  let { data: expenseData }=expRes
+  let { data: incomeData, isLoading: incomeLoading }=incRes
   const handleReportChange=(value:any)=>{
-    setReportType(value)
+    if(value==='Expense')
+    expRes.refetch();
+    if(value==='Income')
+    incRes.refetch();
+    setToview(value)
   }
   let data: { reports: any };
-  if (reportType === 'Expense') data = expenseData || { reports: [] };
-  else if (reportType === 'Income') data = incomeData || { reports: [] };
+  if (toview === 'Expense') data = expenseData || { reports: [] };
+  else if (toview === 'Income') data = incomeData || { reports: [] };
   else data = { reports: [] };
   const items: MenuProps['items'] = [
     {
@@ -98,7 +106,7 @@ const Reports: FC = () => {
           <div className="h-64 overflow-y-scroll">
             {!(data?.reports.length > 0) && (
               <p className="flex justify-center my-24 font-bold text-lg">
-                No {reportType} Yet
+                No {toview} Yet
               </p>
             )}
             {data?.reports.map((report: any, i: number) => (
@@ -109,7 +117,7 @@ const Reports: FC = () => {
                   </Text>
                 </div>
                 <div className="flex gap-4">
-                  {reportType === 'Expense' && (
+                  {toview === 'Expense' && (
                     <>
                       <Text>
                         Quantity :{' '}
@@ -124,7 +132,7 @@ const Reports: FC = () => {
                   <Text>
                     Total :{' '}
                     <span className="text-primary">
-                      {reportType === 'Expense'
+                      {toview === 'Expense'
                         ? (report.price * report.quantity)?.toLocaleString()+' RWF'
                         : report.amount?.toLocaleString()+' RWF'}
                     </span>

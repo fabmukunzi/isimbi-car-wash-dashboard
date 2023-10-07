@@ -48,7 +48,7 @@ const SignupPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-6">
+    <div className="flex flex-col items-center gap-3">
       {contextHolder}
       <Text className="text-center font-bold text-2xl">Create an account</Text>
       <Form
@@ -74,7 +74,7 @@ const SignupPage: React.FC = () => {
         >
           <Input className="w-72" />
         </Form.Item>
-        <Form.Item<SignupPayload>
+        {/* <Form.Item<SignupPayload>
           label="Phone"
           name="phone"
           rules={[
@@ -83,7 +83,7 @@ const SignupPage: React.FC = () => {
           ]}
         >
           <Input className="w-72" />
-        </Form.Item>
+        </Form.Item> */}
         <Form.Item<SignupPayload>
           label="Email"
           name="email"

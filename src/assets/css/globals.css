@@ -43,7 +43,7 @@ body {
 .auth {
   background-image: url('../images/Rectangle 5338.png');
   background-size: cover;
-  /* overflow: hidden; */
+  /* overflow: scroll; */
   /* background-repeat: no-repeat; */
 }
 

@@ -13,6 +13,7 @@ import {
 import storage from 'redux-persist/lib/storage'
 import { baseAPI } from './api'
 import userReducer from './reducers/users'
+import { setupListeners } from '@reduxjs/toolkit/query'
 
 const rootReducer = combineReducers({
   [baseAPI.reducerPath]: baseAPI.reducer,
@@ -37,6 +38,7 @@ export const store = configureStore({
       },
     }).concat(baseAPI.middleware),
 })
+setupListeners(store.dispatch)
 
 export type RootState = ReturnType<typeof store.getState>
 

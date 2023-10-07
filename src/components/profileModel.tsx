@@ -24,7 +24,7 @@ import {
 } from '../store/actions/auth';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../store/reducers/users';
-import { useForm } from 'antd/lib/form/Form'
+import { useForm } from 'antd/lib/form/Form';
 
 interface ModelProps {
   isOpen: boolean;
@@ -37,11 +37,12 @@ const ProfileModal: FC<ModelProps> = ({ user, isOpen, setIsOpen }) => {
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [messageApi, contextHolder] = message.useMessage();
+  const resp = useGetUserProfileQuery();
   const [updateUserprofile, { isLoading: uload }] =
     useUpdateUserProfileMutation();
   const [changePassword, { isLoading: pload }] = useChangePasswordMutation();
-  const { data } = useGetUserProfileQuery();
-  const [form]=useForm();
+  const { data } = resp;
+  const [form] = useForm();
   const dispatch = useDispatch();
   const handleCancel = () => {
     setIsOpen(false);
@@ -66,7 +67,6 @@ const ProfileModal: FC<ModelProps> = ({ user, isOpen, setIsOpen }) => {
     console.log(info);
     setAvatarFile(file);
   };
-
   const handleUpdate = async (values: any) => {
     const formData = new FormData();
     formData.append('firstname', values.firstname);
@@ -77,9 +77,10 @@ const ProfileModal: FC<ModelProps> = ({ user, isOpen, setIsOpen }) => {
       formData.append('avatar', avatarFile);
     }
     await updateUserprofile({ body: formData });
-    dispatch(updateUser(data?.user));
-    handleCancel();
+    (await resp.refetch()).data?.user;
     form.resetFields();
+    dispatch(updateUser((await resp.refetch()).data?.user));
+    handleCancel();
   };
   const handlePassword = async (values: any) => {
     const res: any = await changePassword({
@@ -141,18 +142,21 @@ const ProfileModal: FC<ModelProps> = ({ user, isOpen, setIsOpen }) => {
               height={100}
               className="rounded-md object-cover"
             />
-            <Upload
-              beforeUpload={() => false}
-              onChange={handleAvatarChange}
-              accept="image/*"
-            >
-              <Button
-                icon={<UploadOutlined />}
-                className="avatar-upload-button"
+            <div className="w-48">
+              <Upload
+                beforeUpload={() => false}
+                onChange={handleAvatarChange}
+                className="truncate"
+                accept="image/*"
               >
-                Upload Avatar
-              </Button>
-            </Upload>
+                <Button
+                  icon={<UploadOutlined />}
+                  className="avatar-upload-button"
+                >
+                  Upload Avatar
+                </Button>
+              </Upload>
+            </div>
           </div>
           <div className="text-xl">
             {user?.role !== 'Super Admin' && (

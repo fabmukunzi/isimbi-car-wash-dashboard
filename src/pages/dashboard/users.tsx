@@ -11,8 +11,10 @@ const App: React.FC = () => {
   const [changeStatus, { isLoading: btnLoading }] = useChangeStatusMutation();
   const handleStatus = async (values: any) => {
     const res = await changeStatus(values);
+    await resp.refetch()
   };
-  const { data, isLoading } = useGetAllUsersQuery();
+  const resp = useGetAllUsersQuery();
+  const { data, isLoading }=resp
   const users = data?.data || [];
   const columns: ColumnsType<UserSchema & object> = [
     {

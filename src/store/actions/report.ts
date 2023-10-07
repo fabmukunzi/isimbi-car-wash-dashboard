@@ -21,6 +21,7 @@ const reportEndpoints = baseAPI.injectEndpoints({
         weeklyPerformanceOverview?: any;
         weeklyExpenses?: any;
         groupedByCategory?: any;
+        isAnalytics?: boolean;
       },
       void
     >({
