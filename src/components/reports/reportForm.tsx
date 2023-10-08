@@ -19,6 +19,7 @@ import {
 } from 'antd';
 import { RcFile, UploadProps } from 'antd/es/upload';
 import { FC, useState } from 'react';
+import { useForm } from 'antd/lib/form/Form';
 
 interface IReport {
   handleCancel: () => void;
@@ -29,6 +30,7 @@ const ReportForm: FC<IReport> = ({ handleCancel, reportType }) => {
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [form]=useForm()
   const [createReport, { isLoading }] = useCreateReportMutation();
   const [createIncome, { isLoading: incomeLoading }] =
     useCreateIncomeMutation();
@@ -75,7 +77,9 @@ const ReportForm: FC<IReport> = ({ handleCancel, reportType }) => {
       reportType === 'Expense'
         ? await createReport(formData)
         : await createIncome(formData);
+
     if (!('error' in result)) handleCancel();
+    form.resetFields()
   };
   return (
     <Form layout="vertical" onFinish={handlesubmit}>
@@ -143,6 +147,7 @@ const ReportForm: FC<IReport> = ({ handleCancel, reportType }) => {
           fileList={fileList}
           onPreview={handlePreview}
           onChange={handleChange}
+          accept=".jpg, .png"
         >
           {fileList.length >= 8 ? null : uploadButton}
         </Upload>

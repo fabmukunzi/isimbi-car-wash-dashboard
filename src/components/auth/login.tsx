@@ -15,6 +15,9 @@ import { useRouter } from 'next/router';
 import { useLoginMutation } from '@/src/store/actions/auth';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '@/src/store/reducers/users';
+import { useSearchParams } from 'next/navigation';
+import { showPopUpMessage } from '@/src/utils/messages/popupMessages';
+import { BASE_API_URL } from '@/src/utils/constants';
 
 type ApiResponse = {
   error?: { error?: string; data?: { message: string } };
@@ -23,14 +26,20 @@ type ApiResponse = {
 const LoginPage: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const searchParams = useSearchParams();
+
+  const token = searchParams.get('token');
+  const userQ = searchParams.get('user');
+  let user: any;
+  if (userQ) user = JSON.parse(userQ);
   const [login, { isLoading }] = useLoginMutation();
   const [messageApi, contextHolder] = message.useMessage();
   const { Text } = Typography;
   const onFinish = async (values: any) => {
     const res = (await login(values)) as ApiResponse;
     if (res.error) {
-      messageApi.open({
-        type: 'error',
+      showPopUpMessage({
+        type: 'warning',
         content:
           res.error.error ||
           (res.error.data && res.error.data.message) ||
@@ -42,6 +51,12 @@ const LoginPage: React.FC = () => {
       router.push('/dashboard');
     }
   };
+
+  if (token) {
+    localStorage.setItem('car_wash_token', token);
+    dispatch(updateUser(user));
+    router.push('/dashboard');
+  }
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
@@ -99,7 +114,9 @@ const LoginPage: React.FC = () => {
         <Form.Item>
           <Button
             className="rounded-lg w-72 h-10 bg-white gap-2 font-bold flex justify-center items-center"
-            htmlType="submit"
+            onClick={() =>
+              (window.location.href = `${BASE_API_URL}/users/auth/google`)
+            }
           >
             <Text className="text-blue-500 text-md">Sign in With Google </Text>
             <Image alt="image" height={25} width={25} src={googleIcon} />

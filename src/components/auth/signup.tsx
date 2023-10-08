@@ -112,13 +112,13 @@ const SignupPage: React.FC = () => {
           </Button>
         </Form.Item>
         <Form.Item>
-          <Button
+          <Link
             className="rounded-lg w-72 h-10 bg-white gap-2 font-bold flex justify-center items-center"
-            htmlType="submit"
+            href="https://isimbi-car-wash-bn.onrender.com/users/auth/google"
           >
             <Text className="text-blue-500 text-md">Sign up With Google </Text>
             <Image alt="image" height={25} width={25} src={googleIcon} />
-          </Button>
+          </Link>
         </Form.Item>
         <Text>
           Already a member? <Link href="/">Login</Link>

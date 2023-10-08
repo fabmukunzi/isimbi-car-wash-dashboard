@@ -8,10 +8,12 @@ import emailjs from '@emailjs/browser';
 import { useSelector } from 'react-redux';
 import { Form, Button } from 'antd';
 import { RootState } from '@/src/store';
+import { useForm } from 'antd/lib/form/Form';
 
 const Supports = () => {
   const { Text } = Typography;
   const { TextArea } = Input;
+  const [form] = useForm();
   const { user } = useSelector((state: RootState) => state.userReducer);
   const sendEmail = (value: any) => {
     var templateParams = {
@@ -28,10 +30,17 @@ const Supports = () => {
       )
       .then(
         function (response) {
-          console.log('SUCCESS!', response.status, response.text);
+          showPopUpMessage({
+            type: 'success',
+            content: 'Message has been sent!',
+          });
+          form.resetFields();
         },
         function (error) {
-          console.log('FAILED...', error);
+          showPopUpMessage({
+            type: 'error',
+            content: 'Failed to send a message, try again',
+          });
         }
       );
   };
@@ -45,16 +54,21 @@ const Supports = () => {
           <div className="relative flex flex-col items-center justify-center">
             <Text className="text-primary">Report to Support Team</Text>
             <br />
-            <Form.Item name="message">
-            <TextArea
-              showCount
-              style={{ height: 80, width: 320, marginBottom: 24 }}
-              placeholder="Type here ...."
-            />
+            <Form.Item
+              rules={[
+                { required: true, message: 'Please Provide your message' },
+              ]}
+              name="message"
+            >
+              <TextArea
+                showCount
+                style={{ height: 80, width: 320, marginBottom: 24 }}
+                placeholder="Type here ...."
+              />
             </Form.Item>
             <Button
               htmlType="submit"
-              className="absolute left-[16.7rem] border-none top-16 z-[99] cursor-pointer"
+              className="absolute focus:border-none left-[16.7rem] border-none top-16 z-[99] cursor-pointer"
             >
               <BsSendFill fill="#0077B6" size={19} />
             </Button>

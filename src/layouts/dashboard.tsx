@@ -11,7 +11,11 @@ interface ILayout {
 const DashboardLayout: FC<ILayout> = ({ children }) => {
   const router = useRouter();
   const { user } = useSelector((state: RootState) => state.userReducer);
-  if (!localStorage.getItem('car_wash_token') || !user) router.push('/');
+  if (
+    (!localStorage.getItem('car_wash_token') || !user) &&
+    router.pathname !== '/users/auth/google'
+  )
+    router.push('/');
   return (
     <div className="font-poppins flex gap-4">
       <div className="font-bold text-center my-0 h-screen w-1/6 relative">

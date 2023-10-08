@@ -194,12 +194,14 @@ const ProfileModal: FC<ModelProps> = ({ user, isOpen, setIsOpen }) => {
               </Form.Item>
             </div>
             <div className="flex items-center w-full justify-between">
-              <Button
-                onClick={() => setShowChangePassword(true)}
-                className="cursor-pointer bg-primary text-white"
-              >
-                Change Password
-              </Button>
+              {user?.passowrd && (
+                <Button
+                  onClick={() => setShowChangePassword(true)}
+                  className="cursor-pointer bg-primary text-white"
+                >
+                  Change Password
+                </Button>
+              )}
             </div>
             <div className="flex justify-center gap-5">
               <Button
